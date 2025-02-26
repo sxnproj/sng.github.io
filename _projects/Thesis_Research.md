@@ -6,7 +6,9 @@ img: assets/img/12.jpg
 importance: 1
 category: work
 related_publications: false
+sidebar: left
 ---
+
 
 This is my work and research for a masters thesis. It is a continuation of two previous thesis works presented by [<a href="https://repository.rit.edu/theses/11244/">Agbalessi, 2022</a>] and [<a href="https://repository.rit.edu/theses/10382/">Gillela, 2020</a>]. It is currently nearing completion and I am in the process of writing papers to conclude the research.
 
@@ -38,6 +40,8 @@ Posits are a new form of floating points proposed by Dr. Gustafson as an upgrade
     </p>
 </div>
 
+The regime is a new addition to the Posit formula and consists of a dynamic length of similar bits terminated by the opposite bit. An example is shown in the table below for a Posit with 4 potential bits outside of the sign bit.
+
 
 <div>
 <style>
@@ -46,6 +50,7 @@ table, th, td {
 }
 </style>
     <table style="width:100%">
+    <caption style="text-align:center; caption-side:top">Regime Decoding Example</caption>
         <tr style="text-align:center;">
             <th>Regime Binary</th>
             <th>0001</th>
@@ -69,73 +74,111 @@ table, th, td {
     </table>
 </div>
 
+<br>
+
+<p>
+The second new edition compared to the IEEE floating point is the use of the useed. A construct determined by the exponent size and grants Posits more accuracy for smaller fractional numbers as well as a larger maximum representation at the cost of less accuracy for the larger numbers.
+</p>
+
+Due to this, I made the decision to conduct all the software modeling and testing on Posits with an exponent size set to zero for maximum accuracy on the represented numbers.
 
 <h1>Software</h1>
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
-
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+The software modeling consisted of creating C code to perform Posit arithmetic such as multiplication and addition as well as converting between floating point numbers and Posits. The CNN models that were tested consisted of a network for image classification and one for audio classification with their architectures shown in the diagrams below.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Image_network.PNG" title="Image Network" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
+    The image CNN architecture [<a href="https://repository.rit.edu/theses/11244/">Agbalessi, 2022</a>].
 </div>
+
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Audio_network.PNG" title="Audio Network" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    This image can also have a caption. It's like magic.
+    The audio CNN architecture [<a href="https://repository.rit.edu/theses/11244/">Agbalessi, 2022</a>].
 </div>
 
-You can also put regular text between your rows of images, even citations {% cite ChristieAgbalessi %}.
-Say you wanted to write a bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+<p>
+The two CNNs were modeled using Python with arithmetic imported using my C model for Posit arithmetic. The final test validated the architectures using a 6-bit Posit representation for the inputs, although the accumulator operated in 12-bits for better performance. The results compared with the tests using 8-bit fixed point and 32-bit floating point representation is shown in the table below.
+</p>
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+<div>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+    <table style="width:100%">
+    <caption style="text-align:center; caption-side:top">Software Model Testing Results</caption>
+        <tr style="text-align:center;">
+            <th></th>
+            <th>32-bit Float</th>
+            <th>8-bit Fixed</th>
+            <th>6-bit Posit</th>
+        </tr>
+        <tr style="text-align:center;">
+            <th>Audio Accuracy</th>
+            <th>99.84%</th>
+            <th>97.42%</th>
+            <th>97.0238%</th>
+        </tr>
+        <tr style="text-align:center;">
+            <th>Image Accuracy</th>
+            <th>99.3939%</th>
+            <th>96.10%</th>
+            <th>94.5666%</th>
+        </tr>
+    </table>
+</div>
+
+<br>
+
+<p>
+The tests show great results for the 6-bit Posit compared to the 32-bit floating point and 8-bit fixed point accuracy. This test was conducted with 2500 test samples for the audio model and 3000 test samples for the image model.
+</p>
+
+<h1>Hardware</h1>
+
+The hardware designs were created using Verilog and consisted of a 6-bit Posit multiplier and a 12-bit Posit adder. Diagrams showing the large components for the multiply and addition hardware designs are shown below.
+
+<div class="row justify-content-md-center">
+    <div class="col-8">
+        {% include figure.liquid loading="eager" path="assets/img/Multiply_Diagram.png" title="Multiply Diagram" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
+    6-bit Multiply Hardware Design.
 </div>
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
-
-{% raw %}
-
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/Add_Diagram.png" title="Addition Diagram" class="img-fluid rounded z-depth-1" %}
+    </div>
 </div>
-```
+<div class="caption">
+    12-bit Addition Hardware Design.
+</div>
 
-{% endraw %}
+
+These hardware designs were verified using an exhaustive tesbench that compared all possible input combinations between the software model and the hardware design. The designs were tested in both RTL and gate level testing verifying full functionality.
+
+The functioning hardware designs were then integrated into a configurable hardware accelerator that could run the two CNN models. The final step was the verification of the hardware accelerator through a SystemVerilog testbench that configured the hardware design and ran the same testing data as the software model did comparing the intermediate data to ensure correct functionality. A diagram of the testbench is shown below.
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/Testbench_Diagram.png" title="Testbench for Hardware Accelerator" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    SystemVerilog Testbench for Hardware Accelerator
+</div>
+
+The hardware designs were synthesized using Synposis tools and all debugging was done with Cadence SimVision tools.
+
+More information will be added as I finish gathering benchmarks for the hardware design to compare my new hardware design against the previous designs
