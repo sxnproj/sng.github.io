@@ -2,9 +2,9 @@
 layout: page
 title: Masters Thesis Research
 description: Design of Posit Based CNN Hardware Accelerator
-img: assets/img/12.jpg
+img: assets/img/5.jpg
 importance: 1
-category: work
+category: RTL and Verification
 related_publications: false
 sidebar: left
 ---

@@ -144,11 +144,11 @@ newsletter:
 # -----------------------------------------------------------------------------
 
 collections:
-  # news:
-  #   defaults:
-  #     layout: post
-  #   output: false
-  #   permalink: /:collection/:title/
+  news:
+    defaults:
+      layout: post
+    output: false
+    permalink: /:collection/:title/
   projects:
     output: true
     permalink: /:collection/:title/
@@ -192,7 +192,9 @@ exclude:
   - README.md
   - readme_preview/
   - vendor
-  - _news/
+  - _news/announcement_1.md
+  - _news/announcement_2.md
+  - _news/announcement_3.md
   - _pages/blog.md
   - _pages/publications.md
   - _pages/repositories.md

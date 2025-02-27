@@ -1,81 +1,41 @@
 ---
 layout: page
 title: UVM Verification of USB
-description: with background image
-img: assets/img/12.jpg
-importance: 1
-category: work
+description: A UVM testbench designed to verify a USB RTL design
+img: assets/img/3.jpg
+importance: 2
+category: RTL and Verification
 related_publications: false
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+The USB protocol is used throughout the world for communication between computers and devices. This project aims to create a UVM testbench capable of testing a RTL design implementing USB compliant hardware.
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+<h1>USB</h1>
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+The USB protocol is diviced into many layers going from hardware such as packet control to software specifications for device operation. I only care about the hardware specifications although a good overview of the USB standard can be found <a href="https://www.beyondlogic.org/usbnutshell/usb1.shtml">here</a>.
+
+USB consists of several endpoints where each endpoint correspond to a section of memory. Endpoints are configurable for three functions: IN, OUT, and CONTROL where IN is for sending data from device to host, OUT is for reciving data from host, and CONTROL is used for configuration or sharing device data between device and host.
+
+My testbench will aim to use constrained randomization to configure several endpoints to prepare for packet transfers back and forth as well as checking for correct CRC function in the hardware for error checking. More information about CRC for USB can be found <a href="https://www.usb.org/sites/default/files/crcdes.pdf">here</a>.
+
+A few extra things that are present in the USB design I am testing is the existince of a DMA feature which I will need to include in the testbench.
+
+<h1>UVM Testbench</h1>
+
+The testbench I designed includes two agents, one to represent the host connection and a second to represent the device side. A diagram showcasing the testbench design is shown below.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/USB_Testbench.png" title="USB Testbench Diagram" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
+    Diagram of UVM Testbench for USB.
 </div>
 
-You can also put regular text between your rows of images, even citations {% cite einstein1950meaning %}.
-Say you wanted to write a bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+This testbench features two agents which each individually handle controlling their side of the USB data transfers, one for the host side and another for the device side. Sequencers generate randomized data for configuration and data transfers between the two agents through the USB DUT.
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
+I made great use of UVM subscribers to transfer data around the testbench as well as enable a way to control the actions in the drivers and monitors to allow for synchronization between the two agents.
 
-{% raw %}
-
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
-
-{% endraw %}
+This project was fun and I was able to learn and get a lot of experience about the USB protocol and how to utilize UVM for verification.
