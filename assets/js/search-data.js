@@ -23,14 +23,17 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "";
               },
-            },{id: "projects-masters-thesis-research",
+            },{id: "news-website-is-updated-with-projects-yay-sparkles-smile",
+          title: 'Website is updated with projects. YAY :sparkles: :smile:',
+          description: "",
+          section: "News",},{id: "projects-masters-thesis-research",
           title: 'Masters Thesis Research',
           description: "Design of Posit Based CNN Hardware Accelerator",
           section: "Projects",handler: () => {
               window.location.href = "/projects/Thesis_Research/";
             },},{id: "projects-uvm-verification-of-usb",
           title: 'UVM Verification of USB',
-          description: "with background image",
+          description: "A UVM testbench designed to verify a USB RTL design",
           section: "Projects",handler: () => {
               window.location.href = "/projects/USB_TB/";
             },},{
