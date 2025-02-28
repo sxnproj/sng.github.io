@@ -12,7 +12,7 @@ sidebar: left
 
 This is my work and research for a masters thesis. It is a continuation of two previous thesis works presented by [<a href="https://repository.rit.edu/theses/11244/">Agbalessi, 2022</a>] and [<a href="https://repository.rit.edu/theses/10382/">Gillela, 2020</a>]. It is currently nearing completion and I am in the process of writing papers to conclude the research.
 
-This research focuses on researching the Posit floating point system and its validity for use in quantizing CNN AI models as well as its performance in hardware. Prior work by Agbalessi and Gillela tested two CNN models as well as created a SoC hardware design implementing the models[<a href="https://repository.rit.edu/theses/11244/">Agbalessi, 2022</a>] and [<a href="https://repository.rit.edu/theses/10382/">Gillela, 2020</a>]. The tests conducted validated the use of 8-bit fixed point representation rather than traditional IEEE floating point[<a href="https://repository.rit.edu/theses/11244/">Agbalessi, 2022</a>].
+This research focuses on researching the Posit floating point system and its validity for use in quantizing CNN AI models as well as its performance in hardware. Prior work by Agbalessi and Gillela tested two CNN models as well as created a SoC hardware design implementing said models[<a href="https://repository.rit.edu/theses/11244/">Agbalessi, 2022</a>][<a href="https://repository.rit.edu/theses/10382/">Gillela, 2020</a>]. The prior research tested and validated the use of 8-bit fixed point representation over the traditional IEEE floating point[<a href="https://repository.rit.edu/theses/11244/">Agbalessi, 2022</a>].
 
 
 My goals are as follows:
@@ -80,7 +80,7 @@ table, th, td {
 The second new edition compared to the IEEE floating point is the use of the useed. A construct determined by the exponent size and grants Posits more accuracy for smaller fractional numbers as well as a larger maximum representation at the cost of less accuracy for the larger numbers.
 </p>
 
-Due to this, I made the decision to conduct all the software modeling and testing on Posits with an exponent size set to zero for maximum accuracy on the represented numbers.
+Due to my desire to keep as much accuracy as possible, I made the decision to conduct all the software modeling and testing on Posits with an exponent size set to zero for maximum accuracy on the represented numbers.
 
 <h1>Software</h1>
 
