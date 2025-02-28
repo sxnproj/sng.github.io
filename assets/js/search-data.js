@@ -26,7 +26,12 @@ ninja.data = [{
             },{id: "news-website-is-updated-with-projects-yay-sparkles-smile",
           title: 'Website is updated with projects. YAY :sparkles: :smile:',
           description: "",
-          section: "News",},{id: "projects-masters-thesis-research",
+          section: "News",},{id: "projects-fpga-median-filter",
+          title: 'FPGA Median Filter',
+          description: "A FPGA design to filter noise from an image",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/Median_Filter_FPGA/";
+            },},{id: "projects-masters-thesis-research",
           title: 'Masters Thesis Research',
           description: "Design of Posit Based CNN Hardware Accelerator",
           section: "Projects",handler: () => {
