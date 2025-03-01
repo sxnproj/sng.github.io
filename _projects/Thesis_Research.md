@@ -27,7 +27,7 @@ My goals are as follows:
 </div>
 
 
-<h1>Posits</h1>
+<h1>Posit Floating Point</h1>
 
 Posits are a new form of floating points proposed by Dr. Gustafson as an upgrade to the IEEE floating point more information can be found <a href="https://posithub.org/">here</a>. The equation for Posit floating point numbers is similar to the IEEE floating point with the addition of an extra regime field.
 
