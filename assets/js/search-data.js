@@ -49,6 +49,13 @@ ninja.data = [{
           window.open("mailto:%73%78%6E%36%35%33%31@%72%69%74.%65%64%75", "_blank");
         },
       },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/steven-ng-2724931b4/", "_blank");
+        },
+      },{
       id: 'light-theme',
       title: 'Change theme to light',
       description: 'Change the theme of the site to Light',
